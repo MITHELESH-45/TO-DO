@@ -118,7 +118,7 @@ exports.generateShareLink = async (req, res) => {
 
 };
 
-exports.getPublicList = async (req, res) => {
+exports.getPublicList = async(req, res) => {
 
   try {
 

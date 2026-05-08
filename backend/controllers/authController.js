@@ -8,7 +8,6 @@ const generateToken = (id) => {
 };
 
 exports.signup = async (req,res) => {
-
   try {
 
     const {name,email,password} = req.body;

@@ -12,7 +12,14 @@ const todoItemSchema = new mongoose.Schema({
     default:false
   },
 
-  tags:[String],
+  tags:[{
+    type:String,
+    enum: [
+    "urgent",
+    "work",
+    "low-priority"
+  ]
+  }]
 
   todoList:{
     type:mongoose.Schema.Types.ObjectId,
