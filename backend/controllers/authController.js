@@ -7,7 +7,7 @@ const generateToken = (id) => {
   );
 };
 
-exports.register = async (req,res) => {
+exports.signup = async (req,res) => {
 
   try {
 
@@ -108,7 +108,7 @@ exports.logout = async (req,res) => {
   res.clearCookie("token");
 
   res.json({
-    message: "Logged out"
+    message: "Logged out sucessfull"
   });
 
 };
