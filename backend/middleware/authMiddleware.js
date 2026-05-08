@@ -1,36 +1,31 @@
-require('dotenv').config();
-const jwt=require('jsonwebtoken');
-const User=require('../models/User');
+const jwt = require("jsonwebtoken");
 
-const UserAuth=async(req,res,next)=>{
-    
-    try{
+const authMiddleware = (req,res,next) => {
 
-        const token=req.cookies.token;
-        
-        if(!token){
+  try {
 
-            return res.status(401).json({message:"Unauthorized"});
+    const token =req.cookies.token;
 
-        }
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
-
-        const id = decoded.userId;
-
-        const user=await User.findById(id);
-
-        if(!user){
-            throw new Error("Unauthorized");
-        }
-        req.user=user;
-        next();
-
-
-
-    }catch(err){
-        console.error("Authentication error:", err);
-        res.status(401).send("Unauthorized: "+err.message);
+    if (!token) {
+      return res.status(401).json({
+        message:"Unauthorized"
+      });
     }
-}
 
-module.exports=UserAuth;
+    const user = jwt.verify(token,process.env.JWT_SECRET);
+      
+
+    req.user = user;
+
+    next();
+
+  } catch (error) {
+
+    res.status(401).json({
+      message: "Invalid Token"
+    });
+
+  }
+};
+
+module.exports = authMiddleware;
