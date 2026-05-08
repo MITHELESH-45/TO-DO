@@ -19,7 +19,7 @@ const todoItemSchema = new mongoose.Schema({
     "work",
     "low-priority"
   ]
-  }]
+  }],
 
   todoList:{
     type:mongoose.Schema.Types.ObjectId,
