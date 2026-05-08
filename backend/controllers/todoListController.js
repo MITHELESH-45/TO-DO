@@ -2,7 +2,7 @@ const TodoList = require("../models/TodoList");
 const TodoItem = require("../models/TodoItem");
 const { nanoid } = require("nanoid");
 
-exports.createList = async (req, res) => {
+exports.createList = async (req,res) => {
 
   try {
 
@@ -23,7 +23,7 @@ exports.createList = async (req, res) => {
 
 };
 
-exports.getLists = async (req, res) => {
+exports.getLists = async (req,res) => {
 
   try {
 
@@ -43,7 +43,7 @@ exports.getLists = async (req, res) => {
 
 };
 
-exports.renameList = async (req, res) => {
+exports.renameList = async(req,res) => {
 
   try {
 
@@ -65,7 +65,7 @@ exports.renameList = async (req, res) => {
 
 };
 
-exports.deleteList = async(req, res) => {
+exports.deleteList = async(req,res) => {
 
   try {
 
@@ -123,7 +123,7 @@ exports.getPublicList = async (req, res) => {
   try {
 
     const list = await TodoList.findOne({
-      shareId: req.params.shareId,
+      shareId:req.params.shareId,
       isPublic: true
     });
 
@@ -145,7 +145,7 @@ exports.getPublicList = async (req, res) => {
   } catch (error) {
 
     res.status(500).json({
-      message: error.message
+      message:error.message
     });
 
   }
