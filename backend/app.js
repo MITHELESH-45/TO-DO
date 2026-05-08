@@ -5,13 +5,13 @@ const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/authRoutes");
 const todoListRoutes = require("./routes/todoListRoutes");
 const todoItemRoutes = require("./routes/todoItemRoutes");
-
+require("dotenv").config();
 const app = express();
 
 app.use(express.json());
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
