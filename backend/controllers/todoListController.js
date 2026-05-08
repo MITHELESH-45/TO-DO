@@ -65,7 +65,7 @@ exports.renameList = async (req, res) => {
 
 };
 
-exports.deleteList = async (req, res) => {
+exports.deleteList = async(req, res) => {
 
   try {
 

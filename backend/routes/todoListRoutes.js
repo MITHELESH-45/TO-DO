@@ -24,21 +24,11 @@ router.put("/:id", authMiddleware, renameList);
 
 router.delete("/:id", authMiddleware, deleteList);
 
-router.post(
-  "/share/:id",
-  authMiddleware,
-  generateShareLink
-);
+router.post("/share/:id", authMiddleware,generateShareLink);
 
-router.get(
-  "/public/:shareId",
-  getPublicList
-);
+router.get("/public/:shareId",getPublicList);
 
-router.get(
-  "/stats/:id",
-  authMiddleware,
-  getStats
-);
+router.get("/stats/:id",authMiddleware,getStats);
+  
 
 module.exports = router;

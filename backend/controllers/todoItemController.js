@@ -101,9 +101,8 @@ exports.deleteItem = async (req, res) => {
 
   try {
 
-    await TodoItem.findByIdAndDelete(
-      req.params.id
-    );
+    await TodoItem.findByIdAndDelete(req.params.id);
+      
 
     res.json({
       message: "Item deleted"

@@ -18,14 +18,10 @@ router.post("/",authMiddleware,createItem);
 
 router.get("/:listId",authMiddleware,getItems);
 
-router.patch(
-  "/toggle/:id",
-  authMiddleware,
-  toggleComplete
-);
+router.patch("/toggle/:id",authMiddleware,toggleComplete);
+  
+router.put("/:id",authMiddleware,renameItem);
 
-router.put("/:id", authMiddleware, renameItem);
-
-router.delete("/:id", authMiddleware, deleteItem);
+router.delete("/:id",authMiddleware,deleteItem);
 
 module.exports = router;
