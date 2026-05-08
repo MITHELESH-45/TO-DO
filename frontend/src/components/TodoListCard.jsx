@@ -1,10 +1,7 @@
 import api from "../services/api";
 import TodoItems from "./TodoItems";
 
-function TodoListCard({
-  list,
-  fetchLists
-}) {
+function TodoListCard({list,fetchLists}) {
 
   const deleteList = async () => {
 

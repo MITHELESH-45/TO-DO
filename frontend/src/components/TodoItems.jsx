@@ -7,13 +7,19 @@ function TodoItems({ listId }) {
 
   const [text, setText] = useState("");
 
+  const [tags, setTags] = useState("");
+
+  const [filterTag, setFilterTag] = useState("");
+
   const fetchItems = async () => {
 
     try {
 
-      const res = await api.get(
-        `/items/${listId}`
-      );
+      const url = filterTag
+        ? `/items/${listId}?tag=${filterTag}`
+        : `/items/${listId}`;
+
+      const res = await api.get(url);
 
       setItems(res.data);
 
@@ -29,7 +35,7 @@ function TodoItems({ listId }) {
 
     fetchItems();
 
-  }, []);
+  }, [filterTag]);
 
   const createItem = async () => {
 
@@ -39,10 +45,16 @@ function TodoItems({ listId }) {
 
       await api.post("/items", {
         text,
-        todoList: listId
+        todoList: listId,
+        tags: tags
+          .split(",")
+          .map(tag => tag.trim())
+          .filter(tag => tag !== "")
       });
 
       setText("");
+
+      setTags("");
 
       fetchItems();
 
@@ -92,7 +104,7 @@ function TodoItems({ listId }) {
 
     <div>
 
-      <div className="flex gap-2 mb-4">
+      <div className="space-y-2 mb-4">
 
         <input
           type="text"
@@ -101,15 +113,55 @@ function TodoItems({ listId }) {
           onChange={(e) =>
             setText(e.target.value)
           }
-          className="flex-1 border p-2 rounded-lg"
+          className="w-full border p-2 rounded-lg"
+        />
+
+        <input
+          type="text"
+          placeholder="Tags (urgent,work)"
+          value={tags}
+          onChange={(e) =>
+            setTags(e.target.value)
+          }
+          className="w-full border p-2 rounded-lg"
         />
 
         <button
           onClick={createItem}
-          className="bg-black text-white px-4 rounded-lg"
+          className="bg-black text-white px-4 py-2 rounded-lg w-full"
         >
-          Add
+          Add Item
         </button>
+
+      </div>
+
+      <div className="mb-4">
+
+        <select
+          value={filterTag}
+          onChange={(e) =>
+            setFilterTag(e.target.value)
+          }
+          className="border p-2 rounded-lg w-full"
+        >
+
+          <option value="">
+            All Tags
+          </option>
+
+          <option value="urgent">
+            urgent
+          </option>
+
+          <option value="work">
+            work
+          </option>
+
+          <option value="low-priority">
+            low-priority
+          </option>
+
+        </select>
 
       </div>
 
@@ -120,39 +172,60 @@ function TodoItems({ listId }) {
 
             <div
               key={item._id}
-              className="flex justify-between items-center border p-3 rounded-lg"
+              className="border p-3 rounded-lg bg-gray-50"
             >
 
-              <div className="flex items-center gap-3">
+              <div className="flex justify-between items-center">
 
-                <input
-                  type="checkbox"
-                  checked={item.completed}
-                  onChange={() =>
-                    toggleComplete(item._id)
-                  }
-                />
+                <div className="flex items-center gap-3">
 
-                <p
-                  className={
-                    item.completed
-                      ? "line-through text-gray-500"
-                      : ""
+                  <input
+                    type="checkbox"
+                    checked={item.completed}
+                    onChange={() =>
+                      toggleComplete(item._id)
+                    }
+                  />
+
+                  <p
+                    className={
+                      item.completed
+                        ? "line-through text-gray-500"
+                        : "font-medium"
+                    }
+                  >
+                    {item.text}
+                  </p>
+
+                </div>
+
+                <button
+                  onClick={() =>
+                    deleteItem(item._id)
                   }
+                  className="bg-red-500 text-white px-3 py-1 rounded-lg"
                 >
-                  {item.text}
-                </p>
+                  Delete
+                </button>
 
               </div>
 
-              <button
-                onClick={() =>
-                  deleteItem(item._id)
+              <div className="flex gap-2 mt-3 flex-wrap">
+
+                {
+                  item.tags?.map((tag, index) => (
+
+                    <span
+                      key={index}
+                      className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs"
+                    >
+                      {tag}
+                    </span>
+
+                  ))
                 }
-                className="bg-red-500 text-white px-3 py-1 rounded-lg"
-              >
-                Delete
-              </button>
+
+              </div>
 
             </div>
 

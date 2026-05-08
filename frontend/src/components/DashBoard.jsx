@@ -6,7 +6,7 @@ import TodoListCard from "../components/TodoListCard";
 
 function Dashboard() {
 
-  const [lists, setLists] = useState([]);
+  const [lists,setLists] = useState([]);
 
   const fetchLists = async () => {
 
