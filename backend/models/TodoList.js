@@ -4,7 +4,8 @@ const todoListSchema = new mongoose.Schema({
 
   title:{
     type: String,
-    required: true
+    required: true,
+    maxlength:100,
   },
 
   user:{
